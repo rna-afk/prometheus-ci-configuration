@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: aggregation-route
+  namespace: anarayan
+spec:
+  path: /
+  to:
+    kind: Service
+    name: prometheus-service
+  port:
+    targetPort: port-2

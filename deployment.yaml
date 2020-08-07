@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-aggregation-instance
+  namespace: anarayan
+spec:
+  selector:
+    matchLabels:
+      app: prometheus
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      volumes:
+          - name: prometheus-pvc
+            persistentVolumeClaim:
+              claimName: prometheus-pvc
+      containers:
+        - name: prometheus-instance
+          image: quay.io/anarayan/test_prometheus
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: prometheus-pvc
+              mountPath: /prometheus
+        - name: prometheus-aggregation-instance
+          image: quay.io/anarayan/test_prometheus_aggregation
+          ports:
+            - containerPort: 9092

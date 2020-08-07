@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+  namespace: anarayan
+spec:
+  selector:
+    app: prometheus
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+      name: port-1
+    - protocol: TCP
+      port: 9092
+      targetPort: 9092
+      name: port-2
